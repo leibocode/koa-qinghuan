@@ -1,0 +1,14 @@
+{
+  "name": "minapp-death",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "Leibo<252517584@qq.com>",
+  "license": "ISC"
+}
