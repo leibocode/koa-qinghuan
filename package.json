@@ -6,9 +6,14 @@
   "directories": {
     "test": "test"
   },
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [],
   "author": "Leibo<252517584@qq.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "ramda": "^0.26.1"
+  }
 }
