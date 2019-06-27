@@ -1,4 +1,5 @@
-const Router = require('koa-router')
-const { resolve } = require('path')
-const glob = require('glob')
-const _ = require('loadash')
+const koaBodyParser = require('koa-bodyparser')
+
+export const addKoaBodyParser  = app=>{
+    app.use(koaBodyParser())
+}
