@@ -13,4 +13,8 @@ export const undelegated ={
     message:'未授权!'
 }
 
+export const notFound = {
+    code:400,
+    message:'资源未找到'
+}
 
