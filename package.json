@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "directories": {
-    "dev": ""
+    "dev": "nodemon -w ./start.js --exec node ./start.js"
   },
   "scripts": {},
   "keywords": [],
