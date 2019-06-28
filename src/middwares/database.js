@@ -15,7 +15,7 @@ try{
     throw error;
 }
 
-fs.readdirSync(__dirname,'')
+fs.readdirSync("../database")
   .filter((file)=>{
       return (file.indexOf('.') && (file !==basename) && file.slice(-3)==='.js')
   })
