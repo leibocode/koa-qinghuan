@@ -3,16 +3,14 @@ const r = path => resolve(__dirname, path)
 
 require('babel-core/register')({
   'presets': [
-    'stage-3',
-    'latest-node'
+    'stage-3'
   ],
   'plugins': [
     'transform-decorators-legacy',
     [
       'module-alias', [
         {
-          src: r('./server'), 'expose': '~',
-          src: r('./server/database'), 'expose': 'database'
+          src: r('./src/app'), 'expose': '~'
         }
       ]
     ]

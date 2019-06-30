@@ -4,9 +4,11 @@
   "description": "",
   "main": "app.js",
   "directories": {
+   
+  },
+  "scripts": {
     "dev": "nodemon -w ./start.js --exec node ./start.js"
   },
-  "scripts": {},
   "keywords": [],
   "author": "Leibo<252517584@qq.com>",
   "license": "ISC",
@@ -22,10 +24,13 @@
     "sequelize": "^5.8.12"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
     "babel-eslint": "^7.1.1",
     "babel-plugin-module-alias": "^1.6.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-stage-3": "6.24.1",
+    "babel-preset-es2015": "^6.24.1",
     "backpack-core": "^0.3.0",
     "eslint": "^3.13.1",
     "eslint-config-standard": "^10.2.1",

@@ -31,5 +31,4 @@ class StartUp {
 }
 
 const startUp = new StartUp()
-
 startUp.start()
