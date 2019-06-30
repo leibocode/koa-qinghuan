@@ -20,7 +20,7 @@ const ClassicFields = {
     title:Sequelize.STRING,
     type:Sequelize.INTEGER
 }
-export default class Movie extends Model {
+export  class Movie extends Model {
 }
 
 Movie.init(ClassicFields,{
@@ -28,7 +28,7 @@ Movie.init(ClassicFields,{
     tableName:'mobvie'
 })
 
-export default class Sentence extends Model {
+export class Sentence extends Model {
 
 }
 
