@@ -13,8 +13,34 @@ export default class Art {
         this.type = type
     }
 
+
+
     static async getList(artInfoList){
-        
+            
+    }
+
+    static async _getListByType(ids,type){
+        let arts = []
+        const finder = {
+            where:{
+                id:{
+                    [Op.in]:ids
+                }
+            }
+        }
+        const scope = 'bh'
+        switch(type){
+            case classicType.movie:
+                arts = await Movie.scope(scope).findAll(finder)
+                break;
+            case classicType.music:
+                arts = await Music.scope(scope).findAll(finder)
+                break;
+            case classicType.sentence:
+                arts = await Sentence.scope(scope).findAll(finder)
+                break;
+        }
+        return arts
     }
 
     static async getDate(art_id,type,useScope= true){
