@@ -13,10 +13,30 @@ export default class Art {
         this.type = type
     }
 
-
+    async getDetail(uid){
+        
+    }
 
     static async getList(artInfoList){
-            
+        const artInfoObj = {
+            1:[],
+            2:[],
+            3:[]
+        }
+        for(let artInfo of artInfoObj){
+            artInfoObj[artInfo.type].push(artInfo.art_id)
+        }
+        const arts = []
+        for(let key in artInfoObj){
+            const ids = artInfoObj[key]
+            if(ids.length === 0 ){
+                continue
+            }
+
+            key =parseInt(key)
+            arts.push(await Art._getListByType(ids,key))
+        }
+        return flatten(arts)
     }
 
     static async _getListByType(ids,type){
