@@ -1,5 +1,10 @@
 import { controller,get,post,put,del } from '../services/decorator'
 import Flow from '../database/flow'
+import {  PositiveIntegerValidator } from '../libs/validator'
+import Art from '../database/art'
+import { Success,NotFound } from '../libs/http-exception'
+
+const { Favor } = require('../database/favor')
 
 @controller('/api/classic')
 export class ClassicController {
@@ -21,4 +26,52 @@ export class ClassicController {
             ]
         })
     }
+
+    /**
+     *上一条期刊
+     * @memberof ClassicController
+     */
+    @get('/:index/next')
+    async next(ctx,next){
+        const v = await new PositiveIntegerValidator().validate(ctx,{
+            id:'index'
+        }) 
+        const index = v.get('path.index')
+        const flow = await Flow.findOne({
+            where:{
+                index:index+1
+            }
+        })
+        if(!flow){
+            throw new NotFound()
+        }
+        // const art = await Art.getDate()
+        ctx.body = new Success()
+    }
+
+
+    @get('/:index/previous')
+    async previous(ctx,next){
+        const v = await new PositiveIntegerValidator().validate(ctx,{
+            id:'index'
+        })
+        const index = v.get('path.index')
+        const flow = await Flow.findOne({
+            where:{
+                index:index-1
+            }
+        })
+        if(!flow){
+            throw new NotFound()
+        }
+
+    }
+
+    @get('/favor')
+    async favor(ctx){
+        const id = ctx.auth.uid
+        const favors = await Favor.getMyClassicFavors(uid);
+    }
+
+
 }

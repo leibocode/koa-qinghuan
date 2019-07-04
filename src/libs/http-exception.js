@@ -19,7 +19,7 @@ export class ParamterException extends HttpException {
 export class Success extends HttpException {
     constructor(msg,errorCode){
         super()
-        this.code = 201
+        this.code = 200
         this.msg = msg || 'ok'
         this.errorCode = errorCode || 0
     }
