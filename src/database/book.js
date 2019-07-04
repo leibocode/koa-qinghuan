@@ -3,13 +3,22 @@ const {
     Sequelize,
     Model
 } = require('sequelize')
+const {
+    Favor
+} = require('./favor')
 
 export default class Book extends Model {
     async detail(id){
     }
     
     static async getMyFavorBookCount(){
-
+        const count = await Favor.count({
+            where:{
+                type:400,
+                uid
+            }
+        })
+        return count
     }
 }
 Book.init({

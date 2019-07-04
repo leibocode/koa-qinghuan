@@ -82,3 +82,7 @@ Favor.init({
     tableName:'favor'
 })
 
+module.exports = {
+    Favor
+}
+

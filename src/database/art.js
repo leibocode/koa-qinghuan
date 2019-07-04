@@ -14,14 +14,26 @@ export default class Art {
     }
 
     async getDetail(uid){
-        
+        const {
+            Favor
+        } = require('./favor')
+        const art = await Art.getDate(this.art_id,this.type)
+        if(!art){
+            //throw new 
+        }
+        const like = await Favor.userLikeIt(
+            this.art_id, this.type, uid)
+        return {
+            art,
+            like_status:like
+        }
     }
 
     static async getList(artInfoList){
         const artInfoObj = {
-            1:[],
-            2:[],
-            3:[]
+            100:[],
+            200:[],
+            300:[]
         }
         for(let artInfo of artInfoObj){
             artInfoObj[artInfo.type].push(artInfo.art_id)
