@@ -7,7 +7,7 @@ const {
     Favor
 } = require('./favor')
 
-export default class Book extends Model {
+class Book extends Model {
     async detail(id){
     }
     
@@ -34,4 +34,8 @@ Book.init({
     sequelize,
     tableName:'book'  
 })
+
+module.exports ={
+    Book
+}
 
