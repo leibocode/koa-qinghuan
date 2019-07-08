@@ -12,11 +12,11 @@ export const addKoaBodyParser  = app=> {
 }
 
 export const addJwt = app=> {
-    app.use(koaJwt({
-        secret:config.secret
-    }).unless({
-        //配置规则
-    }))
+    // app.use(koaJwt({
+    //     secret:config.secret
+    // }).unless({
+    //     //配置规则
+    // }))
 }
 
 export const addLogger = app => {
