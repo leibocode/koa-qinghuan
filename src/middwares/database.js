@@ -1,28 +1,59 @@
-const path = require('path')
-const Sequelize = require('sequelize')
-const fs = require('fs')
 import config from '../config/config'
+const {Sequelize,Model} = require('sequelize')
+const {unset, clone, isArray} = require('lodash')
 
-const basename = path.basename(module.filename)
-const db = {}
-const dbConfig = config.mysql
-let sequelize;
 
-try {
-    sequelize = new Sequelize(dbConfig.database,dbConfig.user,dbConfig.password,dbConfig)
-}catch(e){
-    throw e
-}
-
-fs.readdirSync(__dirname)
-  .filter((file)=>{
-      return (file.indexOf('.') && (file !==basename) && file.slice(-3)==='.js')
-  })
-  .forEach((file)=>{
-      const model = sequelize['import'](path.join(__dirname,file)) 
-      db[model.name] = model
+const sequelize = new Sequelize(config.mysql.database,config.mysql.user,config.mysql.password,{
+    dialect:'mysql',
+    host:config.mysql.host,
+    port:config.mysql.port,
+    logging:true,
+  
+    timezone: '+08:00',
+    define:{
+        timestamps:true,
+        paranoid:true,
+        createdAt:'created_at',
+        updatedAt:'updated_at',
+        deletedAt:'deleted_at',
+        underscored:true,
+        freezeTableName:true,
+        scopes:{
+            bh:{
+                attributes:{
+                    exclude:['updated_at','deleted_at','created_at']
+                }
+            }
+        }
+    }
 })
 
-db.sequelize = sequelize
-db.Sequelize =Sequelize
-module.exports = db
+sequelize.sync({
+    force:false
+})
+
+Model.prototype.toJSON= function(){
+    // let data = this.dataValues
+    let data = clone(this.dataValues)
+    unset(data, 'updated_at')
+    unset(data, 'created_at')
+    unset(data, 'deleted_at')
+
+    for (key in data){
+        if(key === 'image'){
+            if(!data[key].startsWith('http'))
+                data[key]=global.config.host + data[key]
+        }
+    }
+
+    if(isArray(this.exclude)){
+        this.exclude.forEach(
+            (value)=>{
+                unset(data,value)
+            }
+        )
+    }
+    return data
+}
+
+module.exports = sequelize

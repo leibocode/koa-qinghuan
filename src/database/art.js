@@ -4,7 +4,7 @@ import  {
     Sentence 
 } from './classic'
 import { classicType } from '../libs/enum'
-const { flatten } = require('loadash')
+const { flatten } = require('lodash')
 const { Op } = require('sequelize')
 
 export default class Art {
