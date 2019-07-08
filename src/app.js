@@ -5,7 +5,7 @@ const { resolve } = require('path')
 const r = path => resolve(__dirname,path)
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
-const MiddleWares = ['database','common','router','exception']
+const MiddleWares = ['common','router','exception']
 /**
  * 应用启动入口
  *

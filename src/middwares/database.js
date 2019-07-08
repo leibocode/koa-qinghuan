@@ -1,21 +1,20 @@
-import config from '../config/config'
 const path = require('path')
 const Sequelize = require('sequelize')
 const fs = require('fs')
+import config from '../config/config'
 
-const basename = path.basename(module,filename)
+const basename = path.basename(module.filename)
 const db = {}
 const dbConfig = config.mysql
 let sequelize;
 
-try{
+try {
     sequelize = new Sequelize(dbConfig.database,dbConfig.user,dbConfig.password,dbConfig)
 }catch(e){
-    const error =new Error();
-    throw error;
+    throw e
 }
 
-fs.readdirSync("../database")
+fs.readdirSync(__dirname)
   .filter((file)=>{
       return (file.indexOf('.') && (file !==basename) && file.slice(-3)==='.js')
   })

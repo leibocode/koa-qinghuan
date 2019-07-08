@@ -4,7 +4,7 @@
 import Router from 'koa-router'
 import { resolve } from 'path'
 import glob from 'glob'
-import _ from 'loadash'
+const _ = require('lodash')
 
 export let routerMap = new Map()
 export const symbolPrefix = Symbol('prefix')

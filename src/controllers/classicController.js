@@ -72,6 +72,4 @@ export class ClassicController {
         const id = ctx.auth.uid
         const favors = await Favor.getMyClassicFavors(uid);
     }
-
-
 }

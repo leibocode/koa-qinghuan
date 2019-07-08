@@ -22,4 +22,3 @@ export const addJwt = app=> {
 export const addLogger = app => {
     app.use(logger())
 }
-
