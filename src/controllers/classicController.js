@@ -1,10 +1,8 @@
 import { controller,get,post,put,del } from '../services/decorator'
-import Flow from '../database/flow'
 import {  PositiveIntegerValidator } from '../libs/validator'
-import Art from '../database/art'
 import { Success,NotFound } from '../libs/http-exception'
 
-const { Favor } = require('../database/favor')
+const { Flow }  = require('../database/flow')
 
 @controller('/api/classic')
 export class ClassicController {
@@ -18,13 +16,13 @@ export class ClassicController {
      * @params 无
      * @memberof ClassicController
      */
-    @get('latest')
-    async latest(ctx,next){
-        const flow = await Flow.findOne({
-            where:[
-                ['index','DESC']
-            ]
-        })
+    @get('/latest')
+    async latest(ctx,next){ 
+        const all  = await Flow.findAll()
+        // const art = await Art.getDate(flow.art_id,flow.type)
+        // const likeLatest = await Favor.userLikeIt(flow.art_id,flow.type,1)
+        // art.setDataValue('index',flow.index)
+        ctx.body = all
     }
 
     /**
