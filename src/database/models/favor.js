@@ -1,7 +1,7 @@
 module.exports =(sequelize,DataTypes)=>{
-    return sequelize.define('flow',{
+    return sequelize.define('favor',{
         uid:{
-            type:Sequelize.INTEGER,
+            type:DataTypes.INTEGER,
         },
         art_id:{
             type:DataTypes.INTEGER
@@ -13,7 +13,7 @@ module.exports =(sequelize,DataTypes)=>{
         freezeTableName: false,
         //默认为表添加create_at,update_at字段
         timestamps: false,
-        tableName:'flow'
+        tableName:'favor'
     })
 }
 

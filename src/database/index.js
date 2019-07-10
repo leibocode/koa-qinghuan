@@ -53,6 +53,10 @@ class MySql {
         })
         return result
     }
+
+    getModel(tables){
+        return this.db[tables]
+    }
 }
 
 module.exports = new MySql()

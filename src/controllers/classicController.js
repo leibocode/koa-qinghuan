@@ -17,11 +17,12 @@ export class ClassicController {
      */
     @get('/latest')
     async latest(ctx,next){ 
-        let where = {
-            order:[]
-        }
-        const all  = await db.findAll('flow')
-        ctx.body = all
+        const flow = await db.getModel('flow').findOne({
+            order:[
+                ['index','DESC']
+            ]
+        })
+        ctx.body = flow
     }
 
     /**

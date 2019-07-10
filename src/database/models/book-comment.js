@@ -8,6 +8,8 @@ module.exports = (sequelize,DataTypes)=>{
             type:DataTypes.INTEGER 
         }
     },{
-
+        freezeTableName:false,
+        timestamps:false,
+        tableName:'comment'
     })
 }

@@ -1,14 +1,14 @@
 module.exports = (sequelize,DataTypes)=>{
-    return sequelize.define('movie',{
+    return sequelize.define('sentence',{
         image: {
-            type:Sequelize.STRING
+            type:DataTypes.STRING
         },
         content:{
-            type:Sequelize.STRING
+            type:DataTypes.STRING
         },
-        pubdate:Sequelize.DATEONLY,
+        pubdate:DataTypes.DATEONLY,
         fav_nams:{
-            type:Sequelize.INTEGER,
+            type:DataTypes.INTEGER,
             defaultValue:0
         },
         title:{
@@ -20,6 +20,6 @@ module.exports = (sequelize,DataTypes)=>{
     },{
         freezeTableName:false,
         timestamps:false,
-        tableName:'book'
+        tableName:'sentence'
     })
 }
