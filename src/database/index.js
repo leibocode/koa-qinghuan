@@ -57,6 +57,10 @@ class MySql {
     getModel(tables){
         return this.db[tables]
     }
+
+    get(){
+        return this.sequelize
+    }
 }
 
 module.exports = new MySql()

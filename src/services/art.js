@@ -7,7 +7,7 @@ const Sentence = Db.getModel('sentence')
 const Music = Db.getModel('music')
 const Favor = Db.getModel('favor')
 
-export default class Art {
+ class Art {
     constructor(art_id,type) {
         this.art_id = art_id
         this.type = type
@@ -28,8 +28,18 @@ export default class Art {
             300:[]
         }
         for(let artInfo of artInfoList){
-
+            artInfoObj[artInfo.type].push(artInfo.art_id)
         }
+        const arts = []
+        for(let key in artInfoObj){
+            const ids = artInfoObj[key]
+            if(ids.length ===0){
+                continue
+            }
+            key = parseInt(key)
+            arts.push(await Art._getListByType(ids,key))
+        }
+        return flatten(arts)
     }
 
     static async getData(art_id,type){
@@ -55,3 +65,5 @@ export default class Art {
         return art;
     }
 }
+
+module.exports = Art

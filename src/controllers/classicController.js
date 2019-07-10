@@ -3,6 +3,10 @@ import {  PositiveIntegerValidator } from '../libs/validator'
 import { Success,NotFound } from '../libs/http-exception'
 
 const db = require('../database/index')
+
+const Flow = db.getModel('flow')
+const ArtSvc = require('../services/art')
+
 @controller('/api/classic')
 export class ClassicController {
     @get('/test')
@@ -17,12 +21,12 @@ export class ClassicController {
      */
     @get('/latest')
     async latest(ctx,next){ 
-        const flow = await db.getModel('flow').findOne({
+        const flow = await Flow.findOne({
             order:[
                 ['index','DESC']
             ]
         })
-        ctx.body = flow
+
     }
 
     /**
@@ -43,8 +47,6 @@ export class ClassicController {
         if(!flow){
             throw new NotFound()
         }
-        // const art = await Art.getDate()
-        ctx.body = new Success()
     }
 
 
@@ -64,6 +66,8 @@ export class ClassicController {
         }
 
     }
+
+    
 
     @get('/favor')
     async favor(ctx){
