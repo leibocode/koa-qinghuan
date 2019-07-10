@@ -2,8 +2,7 @@ import { controller,get,post,put,del } from '../services/decorator'
 import {  PositiveIntegerValidator } from '../libs/validator'
 import { Success,NotFound } from '../libs/http-exception'
 
-const { Flow }  = require('../database/flow')
-
+const db = require('../database/index')
 @controller('/api/classic')
 export class ClassicController {
     @get('/test')
@@ -18,10 +17,10 @@ export class ClassicController {
      */
     @get('/latest')
     async latest(ctx,next){ 
-        const all  = await Flow.findAll()
-        // const art = await Art.getDate(flow.art_id,flow.type)
-        // const likeLatest = await Favor.userLikeIt(flow.art_id,flow.type,1)
-        // art.setDataValue('index',flow.index)
+        let where = {
+            order:[]
+        }
+        const all  = await db.findAll('flow')
         ctx.body = all
     }
 
