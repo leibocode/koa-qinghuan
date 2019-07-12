@@ -15,3 +15,10 @@ export class PositiveIntegerValidator extends LinValidator {
     }
 }
 
+export class LikeValidator extends PositiveIntegerValidator {
+
+}
+
+function checkArtType(vals) {
+    
+}

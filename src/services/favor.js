@@ -7,7 +7,7 @@ const favorModel = Db.getModel('favor')
 const sequelize = Db.get()
 const ArtSvc = require('./art')
 
-export default class Favor {
+class Favor {
 
     static async like(art_id,type,uid){
         const favor = await favorModel.findOne({
@@ -102,3 +102,5 @@ export default class Favor {
         }
     }
 }
+
+module.exports = Favor
