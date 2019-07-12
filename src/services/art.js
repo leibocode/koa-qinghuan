@@ -14,7 +14,7 @@ const Favor = Db.getModel('favor')
     }
 
     static async getDetail(uid) {
-
+        
     }
 
     static async _getListByType(ids,type){

@@ -7,7 +7,7 @@ module.exports = (sequelize,DataTypes)=>{
             type:DataTypes.STRING
         },
         pubdate:DataTypes.DATEONLY,
-        fav_nams:{
+        fav_nums:{
             type:DataTypes.INTEGER,
             defaultValue:0
         },

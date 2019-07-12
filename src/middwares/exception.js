@@ -2,6 +2,7 @@ import { HttpException } from '../libs/http-exception'
 import config from '../config/config'
 export default async function catchError(ctx,next){
     try{
+        
         await next()
     }catch(error){
         const isDev = config.env === 'dev'

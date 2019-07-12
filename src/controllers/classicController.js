@@ -6,6 +6,7 @@ const db = require('../database/index')
 
 const Flow = db.getModel('flow')
 const ArtSvc = require('../services/art')
+const FavorSvc = require('../services/favor')
 
 @controller('/api/classic')
 export class ClassicController {
@@ -26,7 +27,12 @@ export class ClassicController {
                 ['index','DESC']
             ]
         })
-
+        const art = await ArtSvc.getData(flow.art_id,flow.type)
+        const like = await FavorSvc.userLikeIt(flow.art_id,
+            flow.type,0)
+        art.index = flow.index
+        art.likeStatus = like
+        ctx.body = new Success("ok",200,art)
     }
 
     /**
@@ -47,6 +53,13 @@ export class ClassicController {
         if(!flow){
             throw new NotFound()
         }
+        const art = await ArtSvc.getData(flow.art_id,flow.type)
+        const likeNext = await FavorSvc.userLikeIt(
+            flow.art_id,flow.type,0
+        )
+        art.index = flow.index
+        art.likeStatus = likeNext
+        ctx.body = new Success("ok",200,art)
     }
 
 
@@ -64,7 +77,13 @@ export class ClassicController {
         if(!flow){
             throw new NotFound()
         }
-
+        const art = await ArtSvc.getData(flow.art_id,flow.type)
+        const likeNext = await FavorSvc.userLikeIt(
+            flow.art_id,flow.type,0
+        )
+        art.index = flow.index
+        art.likeStatus = likeNext
+        ctx.body = new Success("ok",200,art)
     }
 
     
