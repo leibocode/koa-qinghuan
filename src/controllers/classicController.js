@@ -1,5 +1,8 @@
 import { controller,get,post,put,del } from '../services/decorator'
-import {  PositiveIntegerValidator } from '../libs/validator'
+import {  
+    PositiveIntegerValidator,
+    ClassicValidator
+ } from '../libs/validator'
 import { Success,NotFound } from '../libs/http-exception'
 
 const db = require('../database/index')
@@ -86,11 +89,34 @@ export class ClassicController {
         ctx.body = new Success("ok",200,art)
     }
 
+    @get('/:type/:id')
+    async getArtByIdAndType(ctx,next){
+        let { type,id } = ctx.params
+        const artDetail = await new ArtSvc(id,type).getDetail(ctx.user.uid)
+
+        artDetail.art.setDataValue('like_status',artDetail.like_status)
+        ctx.body = new Success("ok",200,artDetail.art)
+    }
+
+    @get('/:type/:id/favor')
+    async getFavorById(ctx,next){
+        const v = await new ClassicController().validate(ctx)
+        const id = v.get('path.id')
+        const type = parseInt(v.get('path.type'))
+
+        const artDetail = await new ArtSvc(id,type).getDetail(ctx.user.uid)
+        const data = {
+            fav_nums:artDetail.art.fav_nums,
+            like_status:artDetail.like_status
+        }
+        ctx.body = new Success('ok',200,data)
+    }
     
 
     @get('/favor')
     async favor(ctx){
         const id = ctx.auth.uid
         const favors = await Favor.getMyClassicFavors(uid);
+        ctx.body = new Success('ok',200,favors)
     }
 }

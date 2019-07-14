@@ -15,10 +15,50 @@ export class PositiveIntegerValidator extends LinValidator {
     }
 }
 
+function checkArtType(vals) {
+    
+}
+
+function checkType(vals){
+    let type = vals.body.type || vals.path.type
+    if(!type){
+        throw new Error('type是必须参数')
+    }
+}
+
+
 export class LikeValidator extends PositiveIntegerValidator {
+    constructor(){
+        super()
+        
+    }
+}
+
+export class ClassicValidator extends LikeValidator {
 
 }
 
-function checkArtType(vals) {
-    
+export class SearchValidator extends LinValidator {
+    constructor(){
+        super()
+        this.q = [
+            new Rule('isLength','搜索关键词不能为空',{
+                min:1,
+                max:16
+            })
+        ]
+        this.start = [
+            new Rule('isInt','不和规范',{
+                min:0,
+                max:60000
+            })
+        ]
+        this.count = [
+            new Rule('isInt','不和规范',{
+                min:1,
+                max:20
+            }),
+            new Rule('isOptional','',20)
+        ]
+    }
 }
