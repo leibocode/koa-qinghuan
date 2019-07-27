@@ -1,3 +1,5 @@
+import config from '../config/config'
+
 const { flatten } = require('lodash')
 const { Op } =require('sequelize')
 const Db = require('../database/index')
@@ -5,8 +7,12 @@ const Db = require('../database/index')
 const  favorModel = Db.getModel('favor')
 
 
-export default class Book {
+class Book {
     async detail(id){
+        const url = '' 
+        const options = {
+            url:config
+        }
 
     }
     
@@ -24,3 +30,5 @@ export default class Book {
         
     }
 }
+
+module.exports = Book

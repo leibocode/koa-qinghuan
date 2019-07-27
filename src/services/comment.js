@@ -3,7 +3,7 @@ const { flatten } = require('lodash')
 const { Op } =require('sequelize')
 const Db = require('../database/index')
 
-const commentModel = Db.getModel()
+const commentModel = Db.getModel('comment')
 
 class Comment {
     static async addComment (bookId,content){
@@ -35,3 +35,5 @@ class Comment {
         return comments
     }
 }
+
+module.exports = Comment 

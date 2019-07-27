@@ -1,3 +1,4 @@
+import { NotFound } from '../libs/http-exception'
 
 const { flatten } = require('lodash')
 const { Op,Sequelize } =require('sequelize')
@@ -7,8 +8,14 @@ const favorModel = Db.getModel('favor')
 const sequelize = Db.get()
 const ArtSvc = require('./art')
 
-class Favor {
 
+class Favor {
+    /**
+     * 点赞
+     * @param {*} art_id 
+     * @param {*} type 
+     * @param {*} uid 
+     */
     static async like(art_id,type,uid){
         const favor = await favorModel.findOne({
             where:{
@@ -18,7 +25,7 @@ class Favor {
             }
         })
         if(favor){
-            throw new Error()
+            throw new NotFound()
         }
         //事务
         return sequelize.transaction(async t =>{
@@ -27,7 +34,7 @@ class Favor {
                 type,
                 uid
             },{
-
+                transaction:t
             })
             const art = await ArtSvc.getData(art_id,type,false)
             await art.increment('fav_nums',{
@@ -37,6 +44,12 @@ class Favor {
         })
     }
 
+    /**
+     * 取消点赞
+     * @param {*} art_id 
+     * @param {*} type 
+     * @param {*} uid 
+     */
     static async disLike(art_id,type,uid){
         const favor = await favorModel.findOne({
             where:{
@@ -45,6 +58,9 @@ class Favor {
                 uid
             }
         })
+        if(!favor){
+            throw new NotFound()
+        }
         return sequelize.transaction(async t =>{
             await favorModel.destroy({
                 force:true,
@@ -58,6 +74,12 @@ class Favor {
         })
     }
 
+    /**
+     * 当前期刊登陆的用户是否点赞
+     * @param {*} art_id 
+     * @param {*} type 
+     * @param {*} uid 
+     */
     static async userLikeIt(art_id,type,uid){
         const favor = await favorModel.findOne({
             where:{
@@ -66,9 +88,13 @@ class Favor {
                 type
             }
         })
-        return favor?true:false
+        return favor?1:0
     }
 
+    /**
+     * 获取我点赞所有期刊
+     * @param {*} uid 
+     */
     static async getMyClassicFavors(uid){
         const arts = await favorModel.findAll({
             uid,
@@ -82,6 +108,11 @@ class Favor {
         return await ArtSvc.getList(arts)
     }
 
+    /**
+     * 当前书本点赞个数
+     * @param {*} uid 
+     * @param {*} bookId 
+     */
     static async getBookFavor(uid,bookId){
         const favorNums =await favorModel.count({
             where:{

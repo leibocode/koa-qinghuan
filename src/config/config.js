@@ -11,5 +11,6 @@ export default {
         'database':'death',
         'port':3306,
         'dialect': 'mysql'
-    }
+    },
+    'yushu':''
 }

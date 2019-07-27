@@ -15,8 +15,8 @@ import {
  } from '../libs/validator'
 
 const db = require('../database/index')
-const Book = db.getModel('book')
-const HotBook = db.getModel('hot_book')
+const Book = require('../services/book')
+const HotBook = require('../services/hot-book')
 
 @controller('/api/book')
 export class BookController {
@@ -30,6 +30,7 @@ export class BookController {
     async getDetail(ctx,next){
         const v = await new PositiveIntegerValidator().validate(ctx)
         const book = new Book()
+
         const data = await book.detail(v.get('path.id'))
         ctx.body = new Success('ok',200,data)
     }
@@ -42,4 +43,11 @@ export class BookController {
         )
         ctx.body = new Success('ok',200,result)
     }
+
+    @get('/favor/count')
+    async getMyFavorBookCount(){
+        const count = await Book.default.
+    }
+
+    @post('')
 }
