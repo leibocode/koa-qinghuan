@@ -5,7 +5,7 @@ const Db = require('../database/index')
 
 const commentModel = Db.getModel('comment')
 
-class Comment {
+export default class Comment {
     static async addComment (bookId,content){
         const comment = await commentModel.findOne({
             where:{
@@ -35,5 +35,3 @@ class Comment {
         return comments
     }
 }
-
-module.exports = Comment 

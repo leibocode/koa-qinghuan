@@ -7,16 +7,21 @@ import {
 }from '../services/decorator'
 import {
     NotFound,
-    Success
+    Success, 
+    CreateAt
 }from '../libs/http-exception'
 import {  
     PositiveIntegerValidator,
-    SearchValidator
+    SearchValidator,
+    AddCommentValidator
  } from '../libs/validator'
+ import Book from '../services/book'
+ import HotBook from '../services/hot-book'
+import Favor from '../services/favor';
+import Comment from '../services/comment'
 
 const db = require('../database/index')
-const Book = require('../services/book')
-const HotBook = require('../services/hot-book')
+
 
 @controller('/api/book')
 export class BookController {
@@ -45,9 +50,57 @@ export class BookController {
     }
 
     @get('/favor/count')
-    async getMyFavorBookCount(){
-        const count = await Book.default.
+    async getMyFavorBookCount(ctx,next){
+        let uid = ctx.auth.uid || 1
+        const count = await Book.getMyFavorBookCount(uid)
+        ctx.body = new Success('ok',200,count)
     }
 
-    @post('')
+    @post('/:book_id/favor')
+    async getBookFavor(ctx,next){
+        const v = await new PositiveIntegerValidator()
+         .validate(ctx,{
+             id:'book_id'
+         })
+         let uid = ctx.auth.uid || 1;
+         const favot = await Favor.getBookFavor(uid,v.get('path.book_id'))
+         ctx.body = new Success('ok',200,data)
+
+    }
+
+    @post('/:book_id/addComment')
+    async addComment(ctx,next) {
+        const v = await new AddCommentValidator().validate(ctx,{
+            id:'book_id'
+        })
+        Comment.addComment(v.get('body.book_id'),v.get('body.content'))
+        ctx.body = new CreateAt()
+    }
+
+    @get('/:book_id/comments')
+    async getComments(ctx,next){
+        const v = await new PositiveIntegerValidator()
+                             .validate(ctx,{
+                                 id:'book_id'
+        })
+        const book_id = v.get('path.book_id')
+        const comments = await Comment.getCommentsByBookId(book_id)
+        ctx.body = new Success('ok',200,data)
+    }
+
+    @get('/hot_keyword')
+    async getHotKeys(ctx,next){
+        let data = {
+            'hot': ['Python',
+                '哈利·波特',
+                '村上春树',
+                '东野圭吾',
+                '白夜行',
+                '韩寒',
+                '金庸',
+                '王小波'
+            ]
+        }
+        ctx.body = new Success('ok',200,data)
+    }
 }

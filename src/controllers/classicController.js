@@ -4,12 +4,13 @@ import {
     ClassicValidator
  } from '../libs/validator'
 import { Success,NotFound } from '../libs/http-exception'
+import ArtSvc from '../services/art'
+import FavorSvc from '../services/favor'
 
 const db = require('../database/index')
 
 const Flow = db.getModel('flow')
-const ArtSvc = require('../services/art')
-const FavorSvc = require('../services/favor')
+
 
 @controller('/api/classic')
 export class ClassicController {
@@ -92,7 +93,8 @@ export class ClassicController {
     @get('/:type/:id')
     async getArtByIdAndType(ctx,next){
         let { type,id } = ctx.params
-        const artDetail = await new ArtSvc(id,type).getDetail(ctx.user.uid)
+        let uid = ctx.auth.uid || 1
+        const artDetail = await new ArtSvc(id,type).getDetail(uid)
 
         artDetail.art.setDataValue('like_status',artDetail.like_status)
         ctx.body = new Success("ok",200,artDetail.art)
@@ -115,7 +117,7 @@ export class ClassicController {
 
     @get('/favor')
     async favor(ctx){
-        const id = ctx.auth.uid
+        const id = ctx.auth.uid ||1
         const favors = await Favor.getMyClassicFavors(uid);
         ctx.body = new Success('ok',200,favors)
     }

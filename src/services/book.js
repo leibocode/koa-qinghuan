@@ -7,7 +7,7 @@ const Db = require('../database/index')
 const  favorModel = Db.getModel('favor')
 
 
-class Book {
+export default  class Book {
     async detail(id){
         const url = '' 
         const options = {
@@ -30,5 +30,3 @@ class Book {
         
     }
 }
-
-module.exports = Book

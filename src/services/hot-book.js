@@ -1,11 +1,13 @@
+import favorSvc from './favor'
+
 const Db = require('../database/index')
 const { Sequelize,Model,Op } = require('sequelize')
 
 const HotBook  = Db.getModel('hot-book')
 const Favor = Db.getModel('favor')
-const favorSvc = require('./favor')
 
-class HotBook {
+
+export default class HotBook {
     static async getAll(){
         const books = await HotBook.findAll({
             order:[
@@ -43,5 +45,3 @@ class HotBook {
         return book
     }
 }
-
-module.exports = HotBook

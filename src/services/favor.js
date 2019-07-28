@@ -1,4 +1,5 @@
 import { NotFound } from '../libs/http-exception'
+import ArtSvc from './art'
 
 const { flatten } = require('lodash')
 const { Op,Sequelize } =require('sequelize')
@@ -6,10 +7,10 @@ const Db = require('../database/index')
 
 const favorModel = Db.getModel('favor')
 const sequelize = Db.get()
-const ArtSvc = require('./art')
 
 
-class Favor {
+
+export default class Favor {
     /**
      * 点赞
      * @param {*} art_id 
@@ -133,5 +134,3 @@ class Favor {
         }
     }
 }
-
-module.exports = Favor

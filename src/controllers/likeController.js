@@ -22,9 +22,11 @@ export class LikeController {
         const v = await new LikeValidator().validate(ctx,{
             id:'art_id'
         })
+        let uid = ctx.auth.uid || 1
         await FavorSvc.like(
             v.get('body.art_id'),
-            v.get('body.type')
+            v.get('body.type'),
+            uid
         ) 
         ctx.body = new Success()
     }
@@ -34,9 +36,11 @@ export class LikeController {
         const v = await new LikeValidator().validate(ctx,{
             id:'art_id'
         })
+        let uid = ctx.auth.uid || 1
         await FavorSvc.disLike(
             v.get('body.art_id'),
-            v.get('body.type')
+            v.get('body.type'),
+            uid
         )
         ctx.body = new Success()
     }

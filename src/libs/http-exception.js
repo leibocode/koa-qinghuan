@@ -36,6 +36,15 @@ export class NotFound extends HttpException {
     
 }
 
+export class CreateAt extends HttpException {
+    constructor(msg,errorCode){
+        super()
+        this.msg = msg ||'创建成功!'
+        this.errorCode = errorCode || 201
+        this.code = 201
+    }
+}
+
 export class AuthFailed extends HttpException {
     constructor(msg,errorCode) {
         super()

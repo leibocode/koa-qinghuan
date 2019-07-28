@@ -38,6 +38,19 @@ export class ClassicValidator extends LikeValidator {
 
 }
 
+export class AddCommentValidator extends PositiveIntegerValidator {
+    constructor(){
+        super()
+        this.content = [
+            new Rule('isLength','必须在1到12过字符之间',{
+                min:1,
+                max:12
+            })
+        ]
+    }
+}
+
+
 export class SearchValidator extends LinValidator {
     constructor(){
         super()
