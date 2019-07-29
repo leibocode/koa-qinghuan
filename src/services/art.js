@@ -6,19 +6,30 @@ const Movie = Db.getModel('movie')
 const Sentence = Db.getModel('sentence')
 const Music = Db.getModel('music')
 const Favor = Db.getModel('favor')
-
+const Book = Db.getModel('book')
  class Art {
     constructor(art_id,type) {
         this.art_id = art_id
         this.type = type
     }
 
-    static async getDetail(uid) {
+    async getDetail(uid) {
         
     }
 
     static async _getListByType(ids,type){
-        
+        let arts = []
+        const finder = {
+            where: {
+                id: {
+                    [Op.in]: ids
+                }
+            }
+        }
+        switch(type){
+            case 100:
+                arts = await Movie
+        }
     }
 
     static async getList(artInfoList){
@@ -58,6 +69,9 @@ const Favor = Db.getModel('favor')
                 break;
             case 300:
                 art = await Sentence.findOne(finder)
+                break;
+            case 400:
+                 art = await Book.findOne(finder)
                 break;
             default:
                 break;
