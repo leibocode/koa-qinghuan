@@ -1,3 +1,6 @@
+import FavorSvc from './favor'
+import {} from '../'
+
 const { flatten } = require('lodash')
 const { Op } =require('sequelize')
 const Db = require('../database/index')
@@ -14,7 +17,15 @@ const Book = Db.getModel('book')
     }
 
     async getDetail(uid) {
-        
+        const art = await Art.getData(this.art_id,this.type)
+        if(!art){
+            throw new Error()
+        }
+        const like = await FavorSvc.userLikeIt(this.art_id,this.type,uid) 
+        return {
+            art,
+            like_status:like
+        }
     }
 
     static async _getListByType(ids,type){
