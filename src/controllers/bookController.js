@@ -19,14 +19,26 @@ import {
  import HotBook from '../services/hot-book'
 import Favor from '../services/favor';
 import Comment from '../services/comment'
+// import { request,summary,query,path,body,tags, } from 'koa-swagger-decorator'
 
 const db = require('../database/index')
+
+import { request, summary, query, path, body, tags } from 'koa-swagger-decorator'
+
+const testTag = tags(['test'])
 
 
 @controller('/api/book')
 export class BookController {
+
+    @request('get', '/users')
+    @summary('get user list')
+    @testTag
+    @query({
+      type: { type: 'number', required: true, default: 1, description: 'type' },
+    })
     @get('/hot')
-    async getHotList(ctx,next){
+    static async getHotList(ctx,next){
         const books = await HotBook.getAll()
         ctx.body = new Success('ok',200,books)
     }

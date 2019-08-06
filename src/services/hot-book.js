@@ -3,13 +3,13 @@ import favorSvc from './favor'
 const Db = require('../database/index')
 const { Sequelize,Model,Op } = require('sequelize')
 
-const HotBook  = Db.getModel('hot-book')
+const HotBookModel  = Db.getModel('hot-book')
 const Favor = Db.getModel('favor')
 
 
 export default class HotBook {
     static async getAll(){
-        const books = await HotBook.findAll({
+        const books = await HotBookModel.findAll({
             order:[
                 'index'
             ]

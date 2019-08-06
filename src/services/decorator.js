@@ -4,17 +4,20 @@
 import Router from 'koa-router'
 import { resolve } from 'path'
 import glob from 'glob'
+import { SwaggerRouter } from 'koa-swagger-decorator'
 const _ = require('lodash')
 
 export let routerMap = new Map()
 export const symbolPrefix = Symbol('prefix')
 export const isArray = v=>_.isArray(v)?v:[v]
 export const normalizePath = path=>path.startsWith('/')?path:`/${path}`
+import { bookContrl } from '../controllers/bookController'
+
 
 export default class Route {
     constructor(app,apiPath){
         this.app = app,
-        this.router = new Router()
+        this.router = new SwaggerRouter()
         this.apiPath = apiPath
     }
     
@@ -31,9 +34,18 @@ export default class Route {
       
             this.router[conf.method](routerPath, ...controllers)
         }
+    
       
         this.app.use(this.router.routes())
         this.app.use(this.router.allowedMethods())
+        this.router.swagger({
+            title:'清欢小程序API文档',
+            description:'API DOC',
+            version:'1.0.0',
+            swaggerHtmlEndpoint: '/swagger-html',
+            swaggerJsonEndpoint: '/swagger-json'
+        })
+        this.router.mapDir(__dirname)
     }
 }
 

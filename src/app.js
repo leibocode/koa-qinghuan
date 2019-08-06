@@ -25,7 +25,7 @@ class StartUp {
         return R.map(R.compose(
             R.map(i=>i(app)),
             require,
-            i=>`${r('./middwares')}/${i}` 
+            i=>`${r('./middlewares')}/${i}` 
         ))
     }
     async start(){

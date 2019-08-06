@@ -3,7 +3,6 @@
  */
 export default {
     'env':'dev',
-    'secret':'',
     'mysql':{
         'host':'localhost',
         'user':'root',
@@ -12,5 +11,9 @@ export default {
         'port':3306,
         'dialect': 'mysql'
     },
-    'yushu':''
+    'yushu':'',
+    'minapp':{
+        'appId':'',
+        'secret':''
+    }
 }
