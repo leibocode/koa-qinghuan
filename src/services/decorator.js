@@ -11,7 +11,6 @@ export let routerMap = new Map()
 export const symbolPrefix = Symbol('prefix')
 export const isArray = v=>_.isArray(v)?v:[v]
 export const normalizePath = path=>path.startsWith('/')?path:`/${path}`
-import { bookContrl } from '../controllers/bookController'
 
 
 export default class Route {
@@ -45,7 +44,7 @@ export default class Route {
             swaggerHtmlEndpoint: '/swagger-html',
             swaggerJsonEndpoint: '/swagger-json'
         })
-        this.router.mapDir(__dirname)
+        this.router.mapDir(this.apiPath)
     }
 }
 

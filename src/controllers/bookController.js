@@ -29,7 +29,7 @@ const testTag = tags(['test'])
 
 
 @controller('/api/book')
-export class BookController {
+export default class BookController {
 
     @request('get', '/users')
     @summary('get user list')
@@ -43,8 +43,15 @@ export class BookController {
         ctx.body = new Success('ok',200,books)
     }
 
+
+    @request('get', '/users')
+    @summary('get user list')
+    @testTag
+    @query({
+      type: { type: 'number', required: true, default: 1, description: 'type' },
+    })
     @get('/:id/detail')
-    async getDetail(ctx,next){
+    static async getDetail(ctx,next){
         const v = await new PositiveIntegerValidator().validate(ctx)
         const book = new Book()
 
