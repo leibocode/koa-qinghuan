@@ -6,25 +6,30 @@ import {
 import { Success,NotFound } from '../libs/http-exception'
 import ArtSvc from '../services/art'
 import FavorSvc from '../services/favor'
+import { query,request,summary,tags,body,path } from 'koa-swagger-decorator'
 
 const db = require('../database/index')
 
 const Flow = db.getModel('flow')
 
+const classicTag =  tags(['classic'])
 
-@controller('/api/classic')
-export class ClassicController {
+export default class ClassicController {
+    
+
+
+    @request('get','/api/classic/test')
+    @summary('测试api接口')
+    @classicTag
     @get('/test')
     async test(ctx,next){
         ctx.body = 'test'
     }
 
-    /** 获取最新一期的期刊
-     * @get get方法
-     * @params 无
-     * @memberof ClassicController
-     */
-    @get('/latest')
+
+    @request('get','/api/classic/latest')
+    @summary('获取最新一期的期刊')
+    @classicTag
     async latest(ctx,next){ 
         const flow = await Flow.findOne({
             order:[
@@ -39,10 +44,10 @@ export class ClassicController {
         ctx.body = new Success("ok",200,art)
     }
 
-    /**
-     *上一条期刊
-     * @memberof ClassicController
-     */
+
+    @request('get','/api/classic/:index/next')
+    @summary('获取下一条期刊')
+    @classicTag
     @get('/:index/next')
     async next(ctx,next){
         const v = await new PositiveIntegerValidator().validate(ctx,{
@@ -66,7 +71,9 @@ export class ClassicController {
         ctx.body = new Success("ok",200,art)
     }
 
-
+    @request('get','/api/classic/:index/previous')
+    @summary('获取上一条期刊')
+    @classicTag
     @get('/:index/previous')
     async previous(ctx,next){
         const v = await new PositiveIntegerValidator().validate(ctx,{
@@ -90,6 +97,10 @@ export class ClassicController {
         ctx.body = new Success("ok",200,art)
     }
 
+
+    @request('get','/api/classic/:type/:id')
+    @summary('获取指定类型下面的对应Id期刊')
+    @classicTag
     @get('/:type/:id')
     async getArtByIdAndType(ctx,next){
         let { type,id } = ctx.params
@@ -100,6 +111,9 @@ export class ClassicController {
         ctx.body = new Success("ok",200,artDetail.art)
     }
 
+    @request('get','/api/classic/:type/:id')
+    @summary('获取指定类型下面的对应Id期刊点赞数量')
+    @classicTag
     @get('/:type/:id/favor')
     async getFavorById(ctx,next){
         const v = await new ClassicController().validate(ctx)
@@ -114,7 +128,12 @@ export class ClassicController {
         ctx.body = new Success('ok',200,data)
     }
     
-
+    @request('get','/api/classic/favor')
+    @summary('获取我的点赞的所有期刊')
+    @query({
+        uid:{description:'登录才能查看接口'}
+    })
+    @classicTag
     @get('/favor')
     async favor(ctx){
         const id = ctx.auth.uid ||1

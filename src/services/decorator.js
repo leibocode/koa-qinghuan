@@ -42,7 +42,17 @@ export default class Route {
             description:'API DOC',
             version:'1.0.0',
             swaggerHtmlEndpoint: '/swagger-html',
-            swaggerJsonEndpoint: '/swagger-json'
+            swaggerJsonEndpoint: '/swagger-json',
+
+            swaggerOptions: {
+                securityDefinitions: {
+                  api_key: {
+                    type: 'apiKey',
+                    in: 'header',
+                    name: 'api_key',
+                  },
+                },
+            }
         })
         this.router.mapDir(this.apiPath)
     }
