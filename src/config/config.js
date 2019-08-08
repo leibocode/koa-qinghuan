@@ -15,5 +15,6 @@ export default {
     'minapp':{
         'appId':'',
         'secret':''
-    }
+    },
+    'secret':'wechat-min-token'
 }
