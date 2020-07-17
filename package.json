@@ -21,7 +21,7 @@
     "koa-static": "^5.0.0",
     "koa-swagger-decorator": "^1.5.16",
     "loadash": "^1.0.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "mysql2": "^1.6.5",
     "ramda": "^0.26.1",
     "request": "^2.88.0",
